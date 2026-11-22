@@ -1,0 +1,7 @@
+{$DOMAIN} {
+	reverse_proxy frontend:3000 {
+		transport http {
+			read_timeout 200s
+		}
+	}
+}
