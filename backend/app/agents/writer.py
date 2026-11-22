@@ -29,7 +29,7 @@ def fact_check(body: str, citations: list[int], evidence: list[dict]) -> list[st
     try:
         result = llm.structured(FACT_CHECK, user, FactCheckResult, chain_names=settings.llm_check)
     except Exception as e:
-        return [f"Fact checker failed: {e}"]
+        return [f"Fact checker failed: {llm.user_message(e) if llm.is_down(e) else e}"]
     return [
         f"{s.sentence} -> {s.problem or 'unsupported'}" for s in result.sentences if not s.supported
     ]

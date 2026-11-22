@@ -278,8 +278,28 @@ def test_llm_failure_marks_campaign_failed_not_crash(db, monkeypatch):
     cid = start(db)
     pipeline.run_campaign(cid, db)
     c = db().get(Campaign, cid)
-    assert c.status == "done"  # search stopped early, nothing found
-    assert "No company passed" in c.message
+    # Not "done, nothing found": the team is told the AI is unavailable and why.
+    assert c.status == "failed"
+    assert "AI is unavailable" in c.message and "not set up" in c.message
+
+
+def test_ai_limits_stop_the_campaign_instead_of_rejecting_everyone(db, monkeypatch):
+    fake_world(monkeypatch)
+    real = llm.structured
+
+    def limits_hit_at_scoring(system, user, schema, **k):
+        if schema.__name__ == "QualifyResult":
+            raise llm.LLMFailed("groq: 429", rate_limited=True, retry_in=600)
+        return real(system, user, schema, **k)
+
+    monkeypatch.setattr(llm, "structured", limits_hit_at_scoring)
+    cid = start(db)
+    pipeline.run_campaign(cid, db)
+    s = db()
+    c = s.get(Campaign, cid)
+    assert c.status == "failed"
+    assert "used up their limits" in c.message and "about 10 minutes" in c.message
+    assert not any(r.stage == "qualifier" for r in s.scalars(select(Rejection)))
 
 
 def test_tool_timeout_does_not_stop_search(db, monkeypatch):

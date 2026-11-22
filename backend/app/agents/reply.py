@@ -102,7 +102,8 @@ def classify(state: ReplyState) -> ReplyState:
     except llm.LLMNotConfigured:
         return {"action": "handoff", "reason": "LLM is not configured, a person must reply."}
     except Exception as e:  # invalid output, API error: never guess, hand off
-        return {"action": "handoff", "reason": f"Classifier failed: {e}"}
+        why = llm.user_message(e) if llm.is_down(e) else str(e)
+        return {"action": "handoff", "reason": f"Classifier failed: {why}"}
 
     analysis = a.model_dump()
     if a.intent == "opt_out":
@@ -145,7 +146,8 @@ def draft(state: ReplyState) -> ReplyState:
     try:
         r = llm.structured(REPLY_WRITE, user, Reply, chain_names=settings.llm_write)
     except Exception as e:
-        return {"action": "handoff", "reason": f"Reply writer failed: {e}"}
+        why = llm.user_message(e) if llm.is_down(e) else str(e)
+        return {"action": "handoff", "reason": f"Reply writer failed: {why}"}
     return {"reply": r.body}
 
 

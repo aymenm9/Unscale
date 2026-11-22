@@ -86,6 +86,7 @@ I ran the app and used it as the sales team would. Things I sent back:
 - The HTML email template needed more color and branding.
 - I added test mode: put your own email on the home page, every outgoing email goes there, and you can reply and watch what happens. Plus a short "how to use the app" panel.
 - Back buttons that weren't styled.
+- When the free AI providers ran out, the user only saw a bare error code. I asked for explicit errors. Now, when every provider has hit its free limit, the API answers 503 with a plain message ("All our free AI providers have used up their limits for now. The soonest one is free again in about 14 minutes"), a `Retry-After` header, and a code that tells "limits used up" apart from "providers down". A yellow banner on every page says the AI is paused and when it comes back. A campaign that runs into this stops and says why, instead of rejecting every company as "scoring failed".
 
 ### 8. Tuning the qualifier
 
@@ -134,7 +135,7 @@ Examples of "code first" guardrails: a price regex blocks any reply containing a
 
 ## Numbers
 
-- **Tests:** 175 automated tests pass (guardrails, reply graph, mail flow, pipeline, API, LLM fallback chain, decision model). Ruff lint is clean.
+- **Tests:** 181 automated tests pass (guardrails, reply graph, mail flow, pipeline, API, LLM fallback chain, decision model, "AI unavailable" errors). Ruff lint is clean.
 - **Reply guardrails:** 12 tests on the reply graph, including: opt-out never reaches the LLM, a price in an LLM reply is blocked, low confidence hands off, picking a slot books it, an unknown slot hands off.
 - **Qualifier eval:** 9 real companies (with their stored evidence) and the verdict a human would give. Before tuning, 4 of 9 verdicts were right. After tuning, 9 of 9. Run it with `cd backend && .venv/bin/python -m evals.qualifier_eval`. Be careful with this number: the set is small, I wrote the expected verdicts myself, and the same set was used to tune the prompt. It shows the direction, not real-world accuracy.
 - **Pipeline so far (local runs):** 48 companies checked across 6 campaigns. 33 rejected with a stored reason (mostly "not a Shopify store" at the code-check step, then too big, too small, or not enough provable facts). 15 kept: 5 good, 7 maybe, 3 poor.

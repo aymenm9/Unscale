@@ -17,7 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app import audit
-from app.agents import contacts, qualifier, quick_filter, researcher, search
+from app.agents import contacts, llm, qualifier, quick_filter, researcher, search
 from app.guards.research import ToolBudget
 from app.guards.sending import domain_of
 from app.models import (
@@ -210,6 +210,8 @@ def build(db: Session):
             try:
                 result, dropped, pages = researcher.research(x["domain"], x["name"], x["store"])
             except Exception as e:
+                if llm.is_down(e):
+                    raise  # no AI at all: stop the campaign, do not reject every company
                 _reject(db, c, x["name"], x["domain"], "research", f"Research failed: {e}")
                 db.commit()
                 continue
@@ -286,6 +288,8 @@ def build(db: Session):
             try:
                 q = qualifier.qualify(c.settings, company.name, evidence)
             except Exception as e:
+                if llm.is_down(e):
+                    raise  # no AI at all: stop the campaign, do not reject every company
                 _reject(
                     db, c, company.name, company.domain, "qualifier", f"Scoring failed: {e}", cid
                 )
@@ -382,6 +386,8 @@ def build(db: Session):
                 write_draft(db, company, contact)
             except Exception as e:
                 db.rollback()
+                if llm.is_down(e):
+                    raise  # no AI at all: stop the campaign, do not reject every company
                 _reject(db, c, company.name, company.domain, "writer", f"Writer failed: {e}", cid)
                 db.commit()
                 continue
@@ -433,7 +439,10 @@ def run_campaign(campaign_id: int, session_factory) -> None:
     except Exception as e:
         log.exception("campaign %s failed", campaign_id)
         c.status = "failed"
-        c.message = f"Stopped because of an error: {e}"
+        if llm.is_down(e):
+            c.message = f"Stopped, the AI is unavailable. {llm.user_message(e)}"
+        else:
+            c.message = f"Stopped because of an error: {e}"
     c.finished_at = datetime.now(UTC)
     audit.log(db, "agent", f"campaign_{c.status}", "campaign", c.id, message=c.message)
     db.commit()

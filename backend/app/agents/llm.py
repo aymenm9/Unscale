@@ -29,7 +29,49 @@ class LLMNotConfigured(Exception):
 
 
 class LLMFailed(Exception):
-    """Every configured provider failed."""
+    """Every configured provider failed.
+
+    rate_limited: True when every provider failed because it hit its free limit.
+    retry_in: seconds until the soonest provider may be used again (None if unknown).
+    """
+
+    def __init__(self, text: str, rate_limited: bool = False, retry_in: int | None = None):
+        super().__init__(text)
+        self.rate_limited = rate_limited
+        self.retry_in = retry_in
+
+
+def wait_text(seconds: int | None) -> str:
+    """'about 14 minutes', in words a sales person reads at a glance."""
+    if not seconds:
+        return "a minute"
+    if seconds < 90:
+        return "about a minute"
+    if seconds < 3600:
+        return f"about {round(seconds / 60)} minutes"
+    return "about an hour"
+
+
+def user_message(error: Exception) -> str:
+    """What the sales team sees when the AI cannot answer. Plain words, no stack trace."""
+    if isinstance(error, LLMNotConfigured):
+        return "The AI is not set up on the server (no AI provider key). Ask the developer."
+    if isinstance(error, LLMFailed) and error.rate_limited:
+        return (
+            "All our free AI providers have used up their limits for now. The soonest one is "
+            f"free again in {wait_text(error.retry_in)}. Nothing was lost: try again then."
+        )
+    if isinstance(error, LLMFailed):
+        return (
+            "Every AI provider failed just now (they may be down). This is on our side. "
+            "Try again in a minute."
+        )
+    return f"The AI could not answer: {str(error)[:200]}"
+
+
+def is_down(error: Exception) -> bool:
+    """True when no AI can answer at all (as opposed to one bad answer)."""
+    return isinstance(error, (LLMFailed, LLMNotConfigured))
 
 
 @dataclass
@@ -116,6 +158,31 @@ def _rest(p: Provider, seconds: int) -> None:
         _resting_until[p.name] = time.time() + seconds
 
 
+def status() -> dict:
+    """How the main provider pool looks right now, for the app's status banner.
+    Only knows about limits a call already ran into (this process, since it started)."""
+    chain = providers()
+    now = time.time()
+    with _lock:
+        waits = [_resting_until.get(p.name, 0) - now for p in chain]
+    resting = [w for w in waits if w > 0]
+    all_resting = bool(chain) and len(resting) == len(chain)
+    retry_in = int(min(resting)) + 1 if all_resting else None
+    if not chain:
+        message = user_message(LLMNotConfigured())
+    elif all_resting:
+        message = user_message(LLMFailed("", rate_limited=True, retry_in=retry_in))
+    else:
+        message = ""
+    return {
+        "ok": bool(chain) and not all_resting,
+        "providers": len(chain),
+        "resting": len(resting),
+        "retry_in_seconds": retry_in,
+        "message": message,
+    }
+
+
 def _ask[T: BaseModel](p: Provider, system: str, user: str, schema: type[T]) -> T:
     """One provider, up to two tries (second try shows the model its validation error)."""
     client = OpenAI(base_url=p.base_url, api_key=p.api_key, timeout=60, max_retries=1)
@@ -175,7 +242,7 @@ def structured[T: BaseModel](
     chain = (providers(chain_names) if chain_names else []) or providers()
     if not chain:
         raise LLMNotConfigured("No LLM provider configured (see LLM_PROVIDERS in .env)")
-    errors = []
+    errors, waits = [], []
     for p in rotation_order(pool_key, chain):
         try:
             result = _ask(p, system, user, schema)
@@ -184,9 +251,15 @@ def structured[T: BaseModel](
         except Exception as e:
             wait = cooldown_seconds(e)
             if wait:
+                waits.append(wait)
                 _rest(p, wait)
                 log.warning("llm rate limited provider=%s resting %ss", p.name, wait)
             else:
                 log.warning("llm failed provider=%s error=%s", p.name, str(e)[:300])
             errors.append(f"{p.name}: {str(e)[:200]}")
-    raise LLMFailed("; ".join(errors))
+    every_one_limited = len(waits) == len(errors)
+    raise LLMFailed(
+        "; ".join(errors),
+        rate_limited=every_one_limited,
+        retry_in=min(waits) if every_one_limited else None,
+    )

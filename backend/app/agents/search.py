@@ -116,7 +116,10 @@ def find_candidates(
         try:
             step = llm.structured(SEARCH_AGENT, user, SearchStep, chain_names=settings.llm_fast)
         except Exception as e:
-            steps_log.append(f"Stopped: the model failed ({e}).")
+            if llm.is_down(e) and not found:
+                raise  # no AI and nothing found yet: the campaign stops and says why
+            why = llm.user_message(e) if llm.is_down(e) else e
+            steps_log.append(f"Stopped: the model failed ({why}).")
             break
 
         add(step.new_candidates)

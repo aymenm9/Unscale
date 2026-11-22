@@ -12,7 +12,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app import audit
-from app.agents import writer
+from app.agents import llm, writer
 from app.agents.templates import TEMPLATES
 from app.auth import current_user
 from app.config import settings
@@ -78,6 +78,8 @@ def rewrite(
     try:
         r = writer.rewrite(context, body.body, body.comment)
     except Exception as e:
+        if llm.is_down(e):
+            raise  # main.ai_unavailable explains it: limits used up or providers down
         raise HTTPException(503, f"The AI could not rewrite this right now: {e}") from e
     suppressed = {s.email for s in db.scalars(select(Suppression))}
     checks = check_email("reply", None, r.body, [], set(), t.contact.email.lower(), suppressed)

@@ -9,6 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app import audit
+from app.agents import llm
 from app.auth import COOKIE, current_user, verify_password
 from app.db import get_db
 from app.guards.email import check_email
@@ -301,6 +302,8 @@ def redo(draft_id: int, db: Session = Depends(get_db), user: User = Depends(curr
         write_draft(db, company, contact, draft=d)
     except Exception as e:
         db.rollback()
+        if llm.is_down(e):
+            raise  # main.ai_unavailable explains it: limits used up or providers down
         raise HTTPException(
             status_code=503, detail=f"The agent could not rewrite it now: {e}"
         ) from e
@@ -418,6 +421,12 @@ def simulate_reply(thread_id: int, body: SendIn, db: Session = Depends(get_db)):
 
 
 # ---------- calls, suppressions, audit ----------
+
+
+@router.get("/ai-status")
+def ai_status(user: User = Depends(current_user)):
+    """Can the AI answer right now? The app shows a banner when it cannot."""
+    return llm.status()
 
 
 @router.get("/meetings")
