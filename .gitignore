@@ -1,0 +1,13 @@
+node_modules/
+.env*
+!.env.example
+.next/
+.vercel/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.db
+*.db.bak
+*.db-journal
