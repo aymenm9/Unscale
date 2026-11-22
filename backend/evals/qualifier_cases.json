@@ -1,0 +1,662 @@
+[
+ {
+  "name": "The Good Candle",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "poor",
+   "maybe"
+  ],
+  "why": "founder makes the candles, 27 products",
+  "evidence": [
+   {
+    "id": 7,
+    "claim": "Shopify store with 27 products",
+    "quote": "\"published_products_count\":27",
+    "url": "https://thegoodcandle.com/meta.json"
+   },
+   {
+    "id": 8,
+    "claim": "The Good Candle is a small‑batch, hand‑poured candle brand based in Downey, California.",
+    "quote": "The Good Candle is a small-batch, hand-poured candle brand based in Downey, CA.",
+    "url": "https://thegoodcandle.com/pages/wholesale"
+   },
+   {
+    "id": 9,
+    "claim": "The company sells directly to consumers online, offering free shipping on orders over $65.",
+    "quote": "⭐️ Free shipping for orders over $65",
+    "url": "https://thegoodcandle.com"
+   },
+   {
+    "id": 10,
+    "claim": "Customers can pick up orders locally in Downey, CA.",
+    "quote": "Local Pick-Up Now Available at Checkout",
+    "url": "https://thegoodcandle.com"
+   },
+   {
+    "id": 11,
+    "claim": "Wholesale customers receive 50 % off retail pricing across all collections.",
+    "quote": "We offer **50% off retail pricing** on all wholesale orders across our four wholesale collections.",
+    "url": "https://thegoodcandle.com/pages/wholesale"
+   },
+   {
+    "id": 12,
+    "claim": "The minimum wholesale order is $300.",
+    "quote": "**Minimum order:** $300 per order",
+    "url": "https://thegoodcandle.com/pages/wholesale"
+   },
+   {
+    "id": 13,
+    "claim": "Wholesale orders can be placed through the Faire marketplace with net‑60 terms.",
+    "quote": "We've partnered with **Faire** to make wholesale ordering easy.",
+    "url": "https://thegoodcandle.com/pages/wholesale"
+   },
+   {
+    "id": 14,
+    "claim": "The founder and owner is Martha, who makes the candles herself.",
+    "quote": "My name is Martha, I am the candle maker here at The Good Candle",
+    "url": "https://thegoodcandle.com/pages/our-story"
+   }
+  ]
+ },
+ {
+  "name": "Scripted Fragrance",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "maybe",
+   "good"
+  ],
+  "why": "retail store + wholesale, size unknown",
+  "evidence": [
+   {
+    "id": 15,
+    "claim": "Shopify store with 198 products",
+    "quote": "\"published_products_count\":198",
+    "url": "https://scriptedfragrance.com/meta.json"
+   },
+   {
+    "id": 16,
+    "claim": "Scripted Fragrance sells hand‑poured soy candles packaged in reusable drinking glasses.",
+    "quote": "Hand-Poured Soy Candles in Reusable Drinking Glasses",
+    "url": "https://scriptedfragrance.com"
+   },
+   {
+    "id": 17,
+    "claim": "All candles are designed and hand‑poured at their historic New York studio.",
+    "quote": "We're proud to design and hand-pour each candle at our historic New York studio.",
+    "url": "https://scriptedfragrance.com"
+   },
+   {
+    "id": 18,
+    "claim": "The company offers hands‑on candle‑making classes in Warwick, New York.",
+    "quote": "Candle Making Classes in Warwick, New York",
+    "url": "https://scriptedfragrance.com"
+   },
+   {
+    "id": 19,
+    "claim": "Scripted Fragrance operates a brick‑and‑mortar candle store in Warwick, New York.",
+    "quote": "Visit our candle store in Warwick, New York",
+    "url": "https://scriptedfragrance.com"
+   },
+   {
+    "id": 20,
+    "claim": "They provide wholesale and private‑label soy candles for retailers and corporate gifting.",
+    "quote": "Wholesale & Private Label Soy Candles | Scripted Fragrance",
+    "url": "https://scriptedfragrance.com/pages/wholesale"
+   },
+   {
+    "id": 21,
+    "claim": "The brand is mother‑daughter founded and made in America.",
+    "quote": "Mother-Daughter Founded | Made in America",
+    "url": "https://scriptedfragrance.com"
+   },
+   {
+    "id": 22,
+    "claim": "Scripted Fragrance has been featured in The Strategist.",
+    "quote": "As Featured on",
+    "url": "https://scriptedfragrance.com"
+   }
+  ]
+ },
+ {
+  "name": "Penn & Beech Candle Co.",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "maybe",
+   "good"
+  ],
+  "why": "stores + hiring, size unknown",
+  "evidence": [
+   {
+    "id": 23,
+    "claim": "Shopify store with 455 products",
+    "quote": "\"published_products_count\":455",
+    "url": "https://pennandbeech.com/meta.json"
+   },
+   {
+    "id": 24,
+    "claim": "Penn & Beech Candle Co. is hiring for various positions in their stores and production center.",
+    "quote": "Come Work With Us!",
+    "url": "https://pennandbeech.com/pages/careers"
+   },
+   {
+    "id": 25,
+    "claim": "Penn & Beech Candle Co. was founded in 2017.",
+    "quote": "Founded: 2017",
+    "url": "https://tavily.com/knowledge/company/rVXRPgTCsGOA"
+   }
+  ]
+ },
+ {
+  "name": "Scented Designs Candle Company",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "poor",
+   "maybe"
+  ],
+  "why": "no fit signal in evidence",
+  "evidence": [
+   {
+    "id": 26,
+    "claim": "Shopify store with 101 products",
+    "quote": "\"published_products_count\":101",
+    "url": "https://scenteddesigns.com/meta.json"
+   },
+   {
+    "id": 27,
+    "claim": "Scented Designs Candle Company is based in San Jose, California.",
+    "quote": "San Jose, California, United States",
+    "url": "https://tavily.com/knowledge/company/HDr9xel2g116"
+   },
+   {
+    "id": 28,
+    "claim": "Scented Designs Candle Company was founded in 2016.",
+    "quote": "Founded: 2016",
+    "url": "https://tavily.com/knowledge/company/HDr9xel2g116"
+   },
+   {
+    "id": 29,
+    "claim": "Scented Designs Candle Company is a woman-owned business.",
+    "quote": "Sceneted Designs is a woman-owned California candle company",
+    "url": "https://tavily.com/knowledge/company/HDr9xel2g116"
+   },
+   {
+    "id": 30,
+    "claim": "Scented Designs Candle Company has 113 followers on LinkedIn.",
+    "quote": "www.linkedin.com/company/scented-designs-candle-co · 113 followers",
+    "url": "https://tavily.com/knowledge/company/HDr9xel2g116"
+   },
+   {
+    "id": 31,
+    "claim": "Scented Designs Candle Company has no open roles.",
+    "quote": "Open roles: 0",
+    "url": "https://tavily.com/knowledge/company/HDr9xel2g116"
+   }
+  ]
+ },
+ {
+  "name": "Silver Dollar Candle",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "poor"
+  ],
+  "why": "stated headcount 1",
+  "evidence": [
+   {
+    "id": 32,
+    "claim": "Shopify store with 100 products",
+    "quote": "\"published_products_count\":100",
+    "url": "https://silverdollarcandle.com/meta.json"
+   },
+   {
+    "id": 33,
+    "claim": "The company was founded in 2015.",
+    "quote": "Founded: 2015",
+    "url": "https://tavily.com/knowledge/company/XhXvI69W4HPX"
+   },
+   {
+    "id": 34,
+    "claim": "The company has 1 employee.",
+    "quote": "Headcount - Now: 1",
+    "url": "https://tavily.com/knowledge/company/XhXvI69W4HPX"
+   },
+   {
+    "id": 35,
+    "claim": "The company has 0 open roles.",
+    "quote": "Open roles: 0",
+    "url": "https://tavily.com/knowledge/company/XhXvI69W4HPX"
+   }
+  ]
+ },
+ {
+  "name": "Brooklyn Candle Studio",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "good"
+  ],
+  "why": "press says million-dollar brand, wholesale + Shopify",
+  "evidence": [
+   {
+    "id": 36,
+    "claim": "Shopify store with 192 products",
+    "quote": "\"published_products_count\":192",
+    "url": "https://brooklyncandlestudio.com/meta.json"
+   },
+   {
+    "id": 37,
+    "claim": "Brooklyn Candle Studio has 3,200+ 5-STAR reviews",
+    "quote": "3,200+ 5-STAR reviews",
+    "url": "https://brooklyncandlestudio.com"
+   },
+   {
+    "id": 38,
+    "claim": "Brooklyn Candle Studio offers free shipping on U.S. orders over $100",
+    "quote": "FREE SHIPPING ON U.S. ORDERS $100+",
+    "url": "https://brooklyncandlestudio.com"
+   },
+   {
+    "id": 39,
+    "claim": "Brooklyn Candle Studio sells candles and home fragrances",
+    "quote": "Luxury Candles & Home Fragrances",
+    "url": "https://brooklyncandlestudio.com"
+   },
+   {
+    "id": 40,
+    "claim": "Brooklyn Candle Studio has a team of employees who earn at least $18 an hour with benefits",
+    "quote": "All of our employees earn at least $18 an hour with benefits: paid time off and subsidized healthcare, dental, and vision",
+    "url": "https://www.faire.com/brand/b_b5fb0344"
+   },
+   {
+    "id": 41,
+    "claim": "Brooklyn Candle Studio is an eco-conscious company that uses recyclable packaging and shipping materials",
+    "quote": "We are an eco-conscious company, opting to use recyclable packaging and shipping materials and as little plastic as possible",
+    "url": "https://www.faire.com/brand/b_b5fb0344"
+   },
+   {
+    "id": 42,
+    "claim": "Brooklyn Candle Studio was founded as a side hustle and has grown into a million-dollar brand",
+    "quote": "CEO of Brooklyn Candle Studio Turned Her Side Hustle Into a Million Dollar Brand",
+    "url": "https://www.businessinsider.com/brooklyn-candle-studio-from-etsy-side-hustle-2023-4"
+   },
+   {
+    "id": 43,
+    "claim": "Brooklyn Candle Studio has been featured in trade shows such as New York Now",
+    "quote": "The next turning point for my candle business came two years later, when I got a slot at the trade show New York Now in August 2017",
+    "url": "https://www.businessinsider.com/brooklyn-candle-studio-from-etsy-side-hustle-2023-4"
+   },
+   {
+    "id": 44,
+    "claim": "Brooklyn Candle Studio uses wholesale channels to sell their products",
+    "quote": "Different shops around the country could now buy our candles to sell",
+    "url": "https://www.businessinsider.com/brooklyn-candle-studio-from-etsy-side-hustle-2023-4"
+   }
+  ]
+ },
+ {
+  "name": "Spark Candles",
+  "campaign": {
+   "categories": [
+    "Candles",
+    "Home fragrance"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "wholesale",
+    "hiring ops"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "auto",
+   "target": 5
+  },
+  "expected": [
+   "poor"
+  ],
+  "why": "stated headcount 3",
+  "evidence": [
+   {
+    "id": 45,
+    "claim": "Shopify store with 55 products",
+    "quote": "\"published_products_count\":55",
+    "url": "https://sparkcandles.com/meta.json"
+   },
+   {
+    "id": 46,
+    "claim": "Spark Candles offers custom fragrance development services.",
+    "quote": "Custom Fragrance Development",
+    "url": "https://tavily.com/knowledge/company/V8aZPrboeUXt"
+   },
+   {
+    "id": 47,
+    "claim": "Spark Candles has 3 employees.",
+    "quote": "Employees - Now: 3",
+    "url": "https://ca.linkedin.com/company/spark-candles"
+   },
+   {
+    "id": 48,
+    "claim": "Spark Candles was founded in 2020.",
+    "quote": "Founded: 2020",
+    "url": "https://tavily.com/knowledge/company/V8aZPrboeUXt"
+   },
+   {
+    "id": 49,
+    "claim": "Spark Candles is a privately held company.",
+    "quote": "Type: Privately Held",
+    "url": "https://ca.linkedin.com/company/spark-candles"
+   },
+   {
+    "id": 50,
+    "claim": "Spark Candles is headquartered in Boca Raton, Florida, United States.",
+    "quote": "Headquarters: Boca Raton, Florida, United States",
+    "url": "https://tavily.com/knowledge/company/V8aZPrboeUXt"
+   }
+  ]
+ },
+ {
+  "name": "Poured New York",
+  "campaign": {
+   "categories": [
+    "Gifts",
+    "Home goods",
+    "Candles",
+    "Pet",
+    "Outdoor"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon",
+    "Wholesale"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "Raised money recently",
+    "Hiring ops or finance",
+    "Fast product growth"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "peer_founder",
+   "target": 10
+  },
+  "expected": [
+   "maybe",
+   "good"
+  ],
+  "why": "wholesale + Canada distribution, size unknown",
+  "evidence": [
+   {
+    "id": 51,
+    "claim": "Shopify store with 52 products",
+    "quote": "\"published_products_count\":52",
+    "url": "https://pourednewyork.com/meta.json"
+   },
+   {
+    "id": 52,
+    "claim": "Poured New York offers hand-crafted fragrances and candles.",
+    "quote": "Official Online Store – Hand-Crafted Fragrances & Candles | Poured NY",
+    "url": "https://pourednewyork.com"
+   },
+   {
+    "id": 53,
+    "claim": "Poured New York provides free shipping on orders over $75.",
+    "quote": "FAST FREE SHIPPING ON ORDERS OVER $75",
+    "url": "https://pourednewyork.com"
+   },
+   {
+    "id": 54,
+    "claim": "Poured New York offers a Candle of the Month Club.",
+    "quote": "CANDLE OF THE MONTH CLUB",
+    "url": "https://pourednewyork.com"
+   },
+   {
+    "id": 55,
+    "claim": "Poured New York has expanded its distribution to Canada through a partnership with Pony Ride Distribution.",
+    "quote": "We recently signed a Canadian distribution agreement with Pony Ride Distribution that will bring our products to the top boutiques and department stores across Canada.",
+    "url": "https://www.linkedin.com/in/rickytiscareno"
+   },
+   {
+    "id": 56,
+    "claim": "Poured New York products are hand-poured in Hudson, New York.",
+    "quote": "Our products are non-toxic, eco-friendly, and hand-poured in Hudson, New York. We're proudly made in the USA.",
+    "url": "https://pourednewyork.com"
+   }
+  ]
+ },
+ {
+  "name": "TuckStuff",
+  "campaign": {
+   "categories": [
+    "Gifts",
+    "Home goods",
+    "Candles",
+    "Pet",
+    "Outdoor"
+   ],
+   "channels": [
+    "Shopify",
+    "Amazon",
+    "Wholesale"
+   ],
+   "revenue_min": 1,
+   "revenue_max": 10,
+   "staff_min": 5,
+   "staff_max": 50,
+   "location": "Anywhere in the US",
+   "signals": [
+    "Raised money recently",
+    "Hiring ops or finance",
+    "Fast product growth"
+   ],
+   "roles": [
+    "founder",
+    "ops",
+    "finance"
+   ],
+   "voice": "peer_founder",
+   "target": 10
+  },
+  "expected": [
+   "poor"
+  ],
+  "why": "business-school store, not a brand",
+  "evidence": [
+   {
+    "id": 57,
+    "claim": "Shopify store with 184 products",
+    "quote": "\"published_products_count\":184",
+    "url": "https://tuckstuff.com/meta.json"
+   },
+   {
+    "id": 58,
+    "claim": "TuckStuff is the official online store of the Tuck School of Business at Dartmouth.",
+    "quote": "Official Store of the Tuck School of Business at Dartmouth",
+    "url": "https://tuckstuff.com"
+   },
+   {
+    "id": 59,
+    "claim": "TuckStuff offers apparel, accessories, home goods and gift items.",
+    "quote": "Business areas: Apparel Retail, Accessories Retail, Home Goods Retail, Gift Shop",
+    "url": "https://tavily.com/knowledge/company/wqZa5vCUmjRc"
+   },
+   {
+    "id": 60,
+    "claim": "TuckStuff is headquartered in Hanover, New Hampshire, United States.",
+    "quote": "Headquarters: Hanover, New Hampshire, United States",
+    "url": "https://tavily.com/knowledge/company/wqZa5vCUmjRc"
+   },
+   {
+    "id": 61,
+    "claim": "TuckStuff is a privately held B2C retail company.",
+    "quote": "Company type: Privately Held\nBusiness model: B2C",
+    "url": "https://tavily.com/knowledge/company/wqZa5vCUmjRc"
+   }
+  ]
+ }
+]

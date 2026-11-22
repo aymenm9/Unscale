@@ -1,0 +1,18 @@
+[project]
+name = "ledgerwise-sdr-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+# B008: FastAPI's Depends() in defaults is the standard idiom.
+# BLE001: the agent catches every LLM error on purpose and hands off to a human.
+ignore = ["B008", "BLE001"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
