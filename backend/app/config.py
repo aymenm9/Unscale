@@ -31,10 +31,13 @@ class Settings(BaseSettings):
     gonka_base_url: str = ""  # copy from app.gonkabroker.com
     gonka_model: str = ""
 
-    # Quick filter, step 1: Cloudflare's Clef, a decision model. It does not write text: it
-    # answers typed questions with a probability per option. Empty = skip Clef.
-    decision_model: str = "clef-flash"  # "clef-flash" (fast, 9B) or "clef" (27B)
-    # Quick filter, step 2 (fallback when Clef fails): a fast, cheap chat model.
+    # Quick filter uses decision models: they do not write text, they answer typed questions
+    # with a probability per option. Tried in order; empty = skip that one.
+    # 1. Google's Gemini Decision 1 (Decisions API, free tier 10,000 requests a day).
+    gemini_decision_model: str = "gemini-decision-1"
+    # 2. Cloudflare's Clef: "clef-flash" (fast, 9B) or "clef" (27B).
+    clef_model: str = "clef-flash"
+    # 3. Last fallback: a fast, cheap chat model that judges 10 companies per call.
     quick_filter_providers: str = "gemini:gemini-3.5-flash-lite,cloudflare:@cf/openai/gpt-oss-20b"
     gemini_api_key: str = ""
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"

@@ -9,7 +9,7 @@ I want to be honest about how I approached this, with all respect to Unscale.
 
 1. **I did not put 100% of my time into it.** Friends of mine got the same email and the same take-home without any first-round call, so I was a bit unsure how seriously to take it. I did it anyway because it looked like a fun project.
 2. **I used it as a playground for Claude Code.** I use OpenCode on my own projects. I had used Claude Code only at work, where you can't give it freedom with people's data and accounts. On my own accounts I wanted to see how far I could push it: full permissions, connectors, browser access, deployment access, remote control from my phone. Some things I did here (pasting API keys into the chat, letting the agent set them on the hosting platform) I would never do in a real project. All keys get rotated after the review.
-3. **I tried things I had never used.** The main one is a real **decision model**: Cloudflare's Clef. It does not write text like a chat model; you give it a state and typed questions, and it returns a probability for every allowed answer. It filters companies before the expensive research step. I had never used one, so I added it to learn.
+3. **I tried things I had never used.** The main one is a real **decision model**: Google's Gemini Decision 1 (Decisions API), with Cloudflare's Clef as a backup. A decision model does not write text like a chat model; you give it the input and typed questions, and it returns a probability for every allowed answer. It filters companies before the expensive research step. I had never used one, so I added it to learn.
 4. **I used free models only.** I did not know if this project would go anywhere, so I did not want to spend real money on tokens. I used whatever free tier I could get: Groq, Cloudflare Workers AI, OpenCode Zen, Gemini. I did not benchmark these models carefully before using them; I picked them to move fast.
 5. **I know Render's free plan is slow and cold-starts.** The backend sleeps after 15 minutes and takes about a minute to wake. I kept it because it is free, and I added a wake-up screen so the app explains the wait instead of looking broken.
 6. **I kept my stack.** For a 100% free host, all-JavaScript on Vercel would have been easier. I stayed with FastAPI + Next.js because that is what I like and know.
@@ -58,7 +58,7 @@ The final pipeline:
 |---|---|---|
 | Search agent | LLM with search tools, picks its own queries | Groq / Cloudflare pool |
 | Code checks | US, real Shopify store, not seen before (no LLM) | none |
-| Decision model | keep, or drop with a reason (not a store, too big, outside the US, wrong category) | Cloudflare Clef-flash; a chat model only if Clef fails |
+| Decision model | keep, or drop with a reason (not a store, too big, outside the US, wrong category) | Gemini Decision 1, then Cloudflare Clef-flash; a chat model only if both fail |
 | Researcher | reads the site and sources, stores facts as evidence (url + quote) | pool |
 | Qualifier | score + reasons, each reason cites evidence | pool |
 | Contact finder | named person and email from the company's own pages | code + small LLM step |
@@ -103,7 +103,7 @@ I did the end of the project with Claude Code's remote control from my phone, wh
 | Planning, research | Claude Code subagents, web search | parallel deep research while I was at work |
 | Backend | FastAPI, SQLAlchemy, Alembic | my usual stack, simple and explicit |
 | Agents | LangGraph + OpenAI-compatible clients | I like LangGraph; every free provider speaks the OpenAI API |
-| Decision model | Cloudflare Clef-flash (Workers AI) | answers "keep or which reason to drop" as probabilities; code makes the final call, so no JSON to parse or invent |
+| Decision models | Gemini Decision 1 (Google Decisions API), Cloudflare Clef-flash as backup | answer "keep or which reason to drop" as probabilities; code makes the final call, so no JSON to parse or invent. Gemini Decision's free tier allows 10,000 requests a day |
 | LLMs | Groq, Cloudflare Workers AI, OpenCode Zen, Gemini Flash Lite, in rotating pools | free; if one hits its limit the next one answers, if all fail it hands off to a human |
 | Structured output | pydantic schemas on every LLM call | every output is validated before use |
 | Web search / pages | Tavily search, Jina Reader, Shopify's public store data | free tiers; Shopify's store data proves the platform and product count |
@@ -125,7 +125,7 @@ Examples of "code first" guardrails: a price regex blocks any reply containing a
 
 - Didn't open the GitHub repo when first asked; it only happened at deployment time.
 - First research round was too shallow; needed a second round.
-- Got the decision model wrong. I asked for a decision model and mentioned Cloudflare's Clef; it used Gemma, then a normal chat model (Gemini Flash Lite) with a yes/no prompt, and even described that as the "decision model" in this file. I caught it while reviewing this document, and it was switched to Clef.
+- Got the decision model wrong. I asked for "Gemini Decision 1" and mentioned Cloudflare's Clef; it used Gemma, then a normal chat model (Gemini Flash Lite) with a yes/no prompt, and even described that as the "decision model" in this file. I caught it while reviewing this document. It then found both real decision models; Gemini Decision 1 is now the main filter and Clef the backup.
 - The qualifier gave scores that were far too generous (100 for brands with no real need signal), counted the same fact twice, and called "no staff mentioned" proof of a one-person company. The first fix overcorrected and made a good prospect "poor".
 - "Rewrite with AI" rewrote whole emails instead of making the one change asked for.
 - Showed a guardrail failure (email too short) to the user instead of retrying itself.
@@ -134,11 +134,11 @@ Examples of "code first" guardrails: a price regex blocks any reply containing a
 
 ## Numbers
 
-- **Tests:** 172 automated tests pass (guardrails, reply graph, mail flow, pipeline, API, LLM fallback chain, decision model). Ruff lint is clean.
+- **Tests:** 175 automated tests pass (guardrails, reply graph, mail flow, pipeline, API, LLM fallback chain, decision model). Ruff lint is clean.
 - **Reply guardrails:** 12 tests on the reply graph, including: opt-out never reaches the LLM, a price in an LLM reply is blocked, low confidence hands off, picking a slot books it, an unknown slot hands off.
 - **Qualifier eval:** 9 real companies (with their stored evidence) and the verdict a human would give. Before tuning, 4 of 9 verdicts were right. After tuning, 9 of 9. Run it with `cd backend && .venv/bin/python -m evals.qualifier_eval`. Be careful with this number: the set is small, I wrote the expected verdicts myself, and the same set was used to tune the prompt. It shows the direction, not real-world accuracy.
 - **Pipeline so far (local runs):** 48 companies checked across 6 campaigns. 33 rejected with a stored reason (mostly "not a Shopify store" at the code-check step, then too big, too small, or not enough provable facts). 15 kept: 5 good, 7 maybe, 3 poor.
-- **Decision model:** the switch to Clef is covered by 7 unit tests on the keep/drop rule and the fallback. It has not been measured on live campaigns yet: Cloudflare's free daily allowance was already used up the day it was added.
+- **Decision model:** Gemini Decision 1 got 8 of 8 right on a hand-made set (4 real candle brands to keep; an agency, a too-big national brand, a Canadian store and a listicle site to drop), about 0.5 seconds per company. Small set, so it shows it works, not real-world accuracy. Clef (the backup) is not measured live yet: Cloudflare's free daily allowance was used up the day it was added. 10 unit tests cover the keep/drop rule and the fallback order.
 - **Cost:** $0. Free LLM tiers, free search tiers, free Resend, free Render and Vercel.
 
 ## Next steps
