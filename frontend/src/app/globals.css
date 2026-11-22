@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* Direction D: black, white and safety yellow. Yellow only means "needs you" or "current".
+   Lines and whitespace instead of boxes. One family (Archivo) with its width axis. */
+:root {
+  --ink: #000000;
+  --ink-2: #222222;
+  --muted: #4d4d4d;
+  --faint: #757575;
+  --rule: #d0d0d0;
+  --rule-soft: #e6e6e6;
+  --paper: #ffffff;
+  --yellow: #ffc600;
+  --yellow-soft: #fff4cc;
+  --mark: #ffe380;
+  --blue: #0047ab;
+  --red: #b3261e;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
+  --color-paper: var(--paper);
+  --color-yellow: var(--yellow);
+  --color-yellow-soft: var(--yellow-soft);
+  --color-mark: var(--mark);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
+  --font-sans: var(--font-archivo);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+@layer base {
+  a { color: var(--blue); }
+  a:hover { color: var(--ink); }
+}
+
+.wide { font-stretch: 125%; }
+.semi-wide { font-stretch: 112%; }
+
+/* "New" facts in a report get a highlighter mark. */
+.marked { background: linear-gradient(transparent 55%, var(--mark) 55%); }
+
+/* Rows that need a person: yellow tint and a yellow bar on the left. */
+.needs-you { background: var(--yellow-soft); box-shadow: inset 6px 0 0 var(--yellow); }
+
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
