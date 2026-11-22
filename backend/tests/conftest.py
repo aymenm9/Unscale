@@ -17,6 +17,7 @@ def offline_llm(monkeypatch):
     for pool in ("providers", "fast", "read", "judge", "write", "check"):
         monkeypatch.setattr(settings, f"llm_{pool}", "")
     monkeypatch.setattr(settings, "quick_filter_providers", "")
+    monkeypatch.setattr(settings, "decision_model", "")  # no real Clef calls either
     llm.reset_rotation()
 
 

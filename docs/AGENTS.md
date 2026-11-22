@@ -9,7 +9,7 @@ Each agent is one Python module in `backend/app/agents/`, with one job, typed in
 Campaign settings
   -> 1 Search agent (LLM + tools)   plans keywords, runs searches, collects candidates
   -> code checks                    dedupe, US only, size, suppression   (cheap, certain)
-  -> 2 Quick filter (Gemini Flash Lite, fast)   yes/no per company, one-line reason
+  -> 2 Quick filter (Cloudflare Clef decision model) keep/drop per company, with a reason
   -> 3 Researcher (LLM + tools)     reads pages, collects sourced facts
   -> 4 Qualifier (LLM)              good/maybe/poor, reasons for and against
   -> 5 Contact finder (last node)   right person + email, only for "good"
@@ -33,7 +33,12 @@ The campaign page shows them in a "Not chosen" tab: where each one fell short an
 - `meta.json` says not US, or under 10 / over 2,000 products: drop.
 - Why code: these are facts we can check for sure, so no LLM guess is needed and nothing is spent.
 
-## 2. Quick filter (Gemini Flash Lite, fast and cheap)
+## 2. Quick filter (Cloudflare Clef, a decision model)
+
+Clef answers one typed choice question per company (keep / not_a_store / too_big / outside_us /
+wrong_category) with a probability per option. Code drops a company only when P(keep) < 0.25.
+If Clef fails, the chat-model filter below runs instead; if that fails too, everyone is kept.
+
 - **Job:** fast yes/no on each candidate from a small input: name, store data, homepage snippet. Removes the obvious misses (agencies, huge brands, wrong category) before the expensive research.
 - **Batches:** 10 companies per call to stay under rate limits.
 - **Rule:** when unsure, say yes. A wrong "no" is lost forever; a wrong "yes" only costs one research run.
@@ -120,7 +125,7 @@ It adds the unsubscribe footer and headers, stores the message, and writes the a
 - `audit.log()`: every agent action is written to the audit table.
 
 ## Open choices
-1. Quick filter model: Gemini Flash Lite through Google AI Studio's free API (Gemma 4 returned 503s in testing).
+1. Quick filter model: Cloudflare Clef-flash (decision model). Fallback: Gemini Flash Lite (Gemma 4 returned 503s in testing).
 
 ## Models per job (rotating pools)
 
@@ -130,7 +135,7 @@ the pool, and a model that hits a rate limit rests until its cooldown ends. Set 
 | Job | Used by | Pool |
 |---|---|---|
 | fast | search agent, brand extraction | Groq gpt-oss-20b, Gemini 3.5 Flash Lite, Cloudflare gpt-oss-20b |
-| decision | quick filter | Gemini 3.5 Flash Lite, Cloudflare gpt-oss-20b |
+| decision | quick filter | Cloudflare Clef-flash (decision model); fallback Gemini 3.5 Flash Lite, Cloudflare gpt-oss-20b |
 | read | researcher, contact finder | Gemini 2.5 Flash (long context), Cloudflare gpt-oss-120b |
 | judge | qualifier, reply classifier, thread report | Groq + Cloudflare gpt-oss-120b |
 | write | first email, follow-ups, replies, AI rewrite | Groq + Cloudflare gpt-oss-120b |
