@@ -1,5 +1,6 @@
-# Render Blueprint: the live demo (free plan).
-# ledgerwise-app (Next.js) forwards /api/* to ledgerwise-api (FastAPI), which uses ledgerwise-db.
+# Render Blueprint: the live demo backend (free plan).
+# The Next.js frontend runs on Vercel (https://ledgerwise-ai-sdr.vercel.app) and forwards
+# /api/* to ledgerwise-api (FastAPI), which uses ledgerwise-db.
 # API keys are set in the Render dashboard (sync: false), never in this file.
 databases:
   - name: ledgerwise-db
@@ -23,17 +24,7 @@ services:
           name: ledgerwise-db
           property: connectionString
       - key: FRONTEND_ORIGIN
-        value: https://ledgerwise-app.onrender.com
+        value: https://ledgerwise-ai-sdr.vercel.app
       - key: PUBLIC_API_URL
-        value: https://ledgerwise-app.onrender.com
+        value: https://ledgerwise-ai-sdr.vercel.app
 
-  - type: web
-    name: ledgerwise-app
-    runtime: docker
-    plan: free
-    region: oregon
-    dockerContext: ./frontend
-    dockerfilePath: ./frontend/Dockerfile
-    envVars:
-      - key: BACKEND_URL
-        value: https://ledgerwise-api-ufj4.onrender.com
