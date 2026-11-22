@@ -48,6 +48,7 @@ app.add_middleware(
 
 
 @app.get("/health")
+@app.get("/api/health")  # the frontend only forwards /api/*, so its wake-up screen polls this one
 async def health() -> dict[str, str]:
     """Used by the keep-warm ping and deploy checks."""
     return {"status": "ok"}

@@ -60,3 +60,13 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* Wake-up screen: a yellow block sliding across while the backend starts. */
+@keyframes wake-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+.wake-bar { animation: wake-slide 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .wake-bar { animation: none; width: 100%; opacity: 0.6; }
+}
